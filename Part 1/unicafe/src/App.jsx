@@ -6,7 +6,7 @@ const Button = (props) => {
   )
 }
 
-const Display = ({text, number}) => {
+const StatisticLine = ({text, number}) => {
   return (
     <p>{text}: {number}</p>
   )
@@ -14,20 +14,17 @@ const Display = ({text, number}) => {
 
 const Stats = ({good, bad, neutral}) => {
   const loadAverage = () => (good - bad) / (good + bad + neutral)
-  
-
   const loadProportion = () => (good / (good + bad + neutral)) * 100
-
   if (good != 0 || bad != 0 || neutral != 0){
     return (
       <div>
         <h2>Stats: </h2>
-        <Display text="Good Reviews" number={good} />
-        <Display text="Bad Reviews" number={bad} />
-        <Display text="Neutral Reviews" number={neutral} />
-        <Display text="Total" number={good + bad + neutral}/>
-        <Display text="Average" number={loadAverage()}/>
-        <Display text="Positive" number={loadProportion() + '%'} />
+        <StatisticLine text="Good Reviews" number={good} />
+        <StatisticLine text="Bad Reviews" number={bad} />
+        <StatisticLine text="Neutral Reviews" number={neutral} />
+        <StatisticLine text="Total" number={good + bad + neutral}/>
+        <StatisticLine text="Average" number={loadAverage()}/>
+        <StatisticLine text="Positive" number={loadProportion() + '%'} />
       </div>
     )
   }
