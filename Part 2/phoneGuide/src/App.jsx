@@ -8,7 +8,12 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    setPersons(persons.concat({name: newName}))
+    if (persons.findIndex((person) =>person.name === newName.trim()) === -1){
+      setPersons(persons.concat({name: newName}))
+    }
+    else{
+      window.alert(`${newName.trim()} is already on the phone book`)
+    }
     setNewName('')
   }
 
