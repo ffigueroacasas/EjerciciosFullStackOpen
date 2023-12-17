@@ -25,7 +25,7 @@ function App() {
   return (
     <div>
       <SearchBar search={search} handleTyping={handleTyping} />
-      <CountryList countries={countries}/>
+      <CountryList countries={countries} setCountries={setCountries}/>
     </div>
   )
 }

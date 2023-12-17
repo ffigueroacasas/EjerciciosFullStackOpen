@@ -1,4 +1,4 @@
-export const CountryList = ({countries}) => {
+export const CountryList = ({countries, setCountries}) => {
   if (countries.length === 0) return (
     <h3>write in order to search for countries</h3>
   )
@@ -7,7 +7,11 @@ export const CountryList = ({countries}) => {
   )
   else if (countries.length > 1 && countries.length <= 10) return (
     <div>
-      {countries.map((country) => <li key={country.name.common}>{country.name.common}</li>)}
+      {countries.map((country) => 
+        <div key={country.name.common}>
+          <li>{country.name.common}</li> <button onClick={() => setCountries([country])}>Show Details</button>
+        </div>
+        )}
     </div>
   )
   else if (countries.length === 1) {
