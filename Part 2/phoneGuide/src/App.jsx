@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Form from './components/Form'
 import SearchBar from './components/SearchBar.jsx'
 import List from './components/List.jsx'
-import axios from 'axios'
+import personsService from './services/phones.js'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
@@ -11,25 +11,20 @@ const App = () => {
   const [filtered, setFiltered] = useState(persons)
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then(response => {
-        setPersons(response.data)
-        setFiltered(response.data)
+    personsService.getAll()
+      .then(notes => {
+        setPersons(notes)
+        setFiltered(notes)
       })
   }, [])
 
   const addPerson = (event) => {
     event.preventDefault()
     if (persons.findIndex((person) =>person.name === newName.trim()) === -1){
-      setPersons(persons.concat({name: newName, number: newNumber}))
-      let newPersons = persons.concat({name: newName, number: newNumber})
-      setFiltered(newPersons)
-      axios
-           .post("http://localhost:3001/persons", {name: newName, number: newNumber})
-           .then(response => {
-            setPersons(persons.concat(response.data))
-            setFiltered(filtered.concat(response.data))
+      personsService.create({name: newName, number: newNumber})
+           .then(newPerson => {
+            setPersons(persons.concat(newPerson))
+            setFiltered(filtered.concat(newPerson))
            })
     }
     else{
