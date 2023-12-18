@@ -25,6 +25,12 @@ const App = () => {
       setPersons(persons.concat({name: newName, number: newNumber}))
       let newPersons = persons.concat({name: newName, number: newNumber})
       setFiltered(newPersons)
+      axios
+           .post("http://localhost:3001/persons", {name: newName, number: newNumber})
+           .then(response => {
+            setPersons(persons.concat(response.data))
+            setFiltered(filtered.concat(response.data))
+           })
     }
     else{
       window.alert(`${newName.trim()} is already on the phone book`)
