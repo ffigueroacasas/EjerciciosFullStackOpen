@@ -11,7 +11,13 @@ const create = newPerson => {
   return request.then(response => response.data)
 }
 
+const remove = personId => {
+  const request = axios.delete(`http://localhost:3001/persons/${personId}`)
+  return request.then(response => response.status)
+}
+
 export default {
   getAll,
-  create
+  create,
+  remove
 }

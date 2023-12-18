@@ -29,7 +29,6 @@ function App() {
            .get(`http://api.weatherstack.com/current?access_key=${API_KEY}&query=${countries[0].capital}`)
            .then((response) => {
               setWeather(response.data.current)
-              console.log(response)
            })
     }
   }

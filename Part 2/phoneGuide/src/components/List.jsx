@@ -1,9 +1,9 @@
 import Person from "./Person"
 
-const List = ({filtered}) => {
+const List = ({filtered, deletePerson}) => {
   return (
     <div>
-        {filtered.map((person) =><Person key={person.name} person={person}/>)}
+        {filtered.map((person) =><Person key={person.name} person={person} deletePerson={deletePerson}/>)}
     </div>
   )
 }
