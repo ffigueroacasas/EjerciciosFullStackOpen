@@ -3,12 +3,14 @@ import Form from './components/Form'
 import SearchBar from './components/SearchBar.jsx'
 import List from './components/List.jsx'
 import personsService from './services/phones.js'
+import { Notification } from './components/Notification.jsx'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filtered, setFiltered] = useState(persons)
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     personsService.getAll()
@@ -21,11 +23,13 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     let person = persons.find((person) =>person.name === newName.trim()) 
-    if (person === -1){
+    if (person === undefined){
       personsService.create({name: newName, number: newNumber})
            .then(newPerson => {
             setPersons(persons.concat(newPerson))
             setFiltered(filtered.concat(newPerson))
+            setNotification({message: 'Person added succesfully!', isAnError: false})
+            setTimeout(() => setNotification(null), 5000)
            })
     }
     else{
@@ -35,6 +39,12 @@ const App = () => {
                       .then(updatedPerson => {
                         setPersons(persons.map(person => person.id !== updatedPerson.id ? person : updatedPerson ))
                         setFiltered(persons.map(person => person.id !== updatedPerson.id ? person : updatedPerson ))
+                        setNotification('Number updated succesfully!')
+                        setTimeout(() => setNotification(null), 5000)
+                      })
+                      .catch(error => {
+                        setNotification({message: `Information from ${person.name} has already been removed from server`, isAnError: true})
+                        setTimeout(() => setNotification(null), 5000)
                       })
       }
     }
@@ -63,6 +73,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       Find a specific person: <SearchBar handleSearch={handleSearch} />
+      <Notification notification={notification}/> 
       <h2>Add a new Person:</h2>
       <Form addPerson={addPerson} newName={newName} newNumber={newNumber} setNewName={setNewName} setNewNumber={setNewNumber}/>
       <h2>Numbers</h2>
