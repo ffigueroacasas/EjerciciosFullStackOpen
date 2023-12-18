@@ -1,4 +1,6 @@
-export const CountryList = ({countries, setCountries}) => {
+import { Weather } from "./Weather.jsx"
+
+export const CountryList = ({countries, setCountries, weather}) => {
   if (countries.length === 0) return (
     <h3>write in order to search for countries</h3>
   )
@@ -24,6 +26,7 @@ export const CountryList = ({countries, setCountries}) => {
       <h3>Languages</h3>
       <ul>{Object.values(country.languages).map((val) => <li key={val}>{val}</li>)}</ul>
       <img src={country.flags.png} alt="" />
+      <Weather weather={weather} country={country}/> 
     </div>
   )}
 }

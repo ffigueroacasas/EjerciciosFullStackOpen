@@ -3,7 +3,6 @@ export const SearchBar = ({search, handleTyping}) => {
     <div>
       <h2>Find: Countries: </h2>
       <input type="text"  onChange={handleTyping}/>
-      <p>debug: {search}</p>
     </div>
   )
 }
