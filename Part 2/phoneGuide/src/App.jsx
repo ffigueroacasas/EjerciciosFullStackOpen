@@ -20,7 +20,8 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    if (persons.findIndex((person) =>person.name === newName.trim()) === -1){
+    let person = persons.find((person) =>person.name === newName.trim()) 
+    if (person === -1){
       personsService.create({name: newName, number: newNumber})
            .then(newPerson => {
             setPersons(persons.concat(newPerson))
@@ -28,7 +29,14 @@ const App = () => {
            })
     }
     else{
-      window.alert(`${newName.trim()} is already on the phone book`)
+      if(window.confirm(`${person.name} is already added to the phonebook, replace the old number with a new one?`)){
+        personsService
+                      .update({...person, number: newNumber})
+                      .then(updatedPerson => {
+                        setPersons(persons.map(person => person.id !== updatedPerson.id ? person : updatedPerson ))
+                        setFiltered(persons.map(person => person.id !== updatedPerson.id ? person : updatedPerson ))
+                      })
+      }
     }
     setNewName('')
     setNewNumber('')

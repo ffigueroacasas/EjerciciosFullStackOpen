@@ -16,8 +16,14 @@ const remove = personId => {
   return request.then(response => response.status)
 }
 
+const update = updatedPerson => {
+  const request = axios.put(`http://localhost:3001/persons/${updatedPerson.id}`, updatedPerson)
+  return request.then(response => response.data)
+}
+
 export default {
   getAll,
   create,
-  remove
+  remove,
+  update
 }
