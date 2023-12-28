@@ -31,6 +31,11 @@ const App = () => {
             setNotification({message: 'Person added succesfully!', isAnError: false})
             setTimeout(() => setNotification(null), 5000)
            })
+           .catch(error => {
+            console.log(error.response.data)
+            setNotification({message: error.message, isAnError: false})
+            setTimeout(() => setNotification(null), 5000)
+           })
     }
     else{
       if(window.confirm(`${person.name} is already added to the phonebook, replace the old number with a new one?`)){
