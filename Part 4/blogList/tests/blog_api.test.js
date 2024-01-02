@@ -70,6 +70,12 @@ test('retrieves all blogs from database', async () => {
     expect(response.body).toHaveLength(initialBlogs.length)
 });
 
+test('id attribute should be defined', async () => {
+  const response = await api
+    .get('/api/blogs')
+  expect(response.body[0].id).toBeDefined()
+});
+
 afterAll(() => {
   mongoose.connection.close()
   })
