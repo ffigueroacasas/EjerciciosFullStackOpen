@@ -118,6 +118,17 @@ test('for a blog without the likes attribute, it should assign 0 likes', async (
     expect(likes[likes.length - 1]).toEqual(0)
 });
 
+test('if the title or url are missing, it should return 400 Bad Request', async () => {
+  const newBlog = {
+      author: "Developer"
+    }
+  
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+})
+
 afterAll(() => {
   mongoose.connection.close()
   })
