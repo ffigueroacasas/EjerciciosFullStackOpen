@@ -98,6 +98,26 @@ test('it should create a new blog in the database', async () => {
   expect(titles).toContain("Test Blog")
 });
 
+test('for a blog without the likes attribute, it should assign 0 likes', async () => {
+  const newBlog = {
+      title: "Test Blog",
+      author: "Developer",
+      url: "https://freecodecamp.com/"
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+    
+    const response = await api.get('/api/blogs')
+    const likes = response.body.map(blog => blog.likes)
+
+    expect(response.body).toHaveLength(initialBlogs.length + 1)
+    expect(likes[likes.length - 1]).toEqual(0)
+});
+
 afterAll(() => {
   mongoose.connection.close()
   })
