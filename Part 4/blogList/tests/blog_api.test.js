@@ -141,6 +141,26 @@ test('it should delete a blog if id is valid', async () => {
   expect(ids).not.toContain(blogToDelete.id)
 })
 
+test('it should update an existing blog if id is valid', async () => {
+  const blogsAtStart = await Blog.find({})
+  const blogToUpdate = {
+    id: blogsAtStart[0].id,
+    title: blogsAtStart[0].title, 
+    author: blogsAtStart[0].author,
+    url: blogsAtStart[0].url,
+    likes: blogsAtStart[0].likes + 1
+  }
+  await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send(blogToUpdate)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+  const blogsAtEnd = await Blog.find({})
+  const updatedBlog = blogsAtEnd.find(blog => blog.id === blogToUpdate.id)
+  expect(blogsAtStart.length).toEqual(blogsAtEnd.length)
+  expect(updatedBlog.likes).toEqual(blogToUpdate.likes)
+});
+
 afterAll(() => {
   mongoose.connection.close()
   })
