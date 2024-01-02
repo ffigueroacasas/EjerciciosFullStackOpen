@@ -129,6 +129,18 @@ test('if the title or url are missing, it should return 400 Bad Request', async 
       .expect(400)
 })
 
+test('it should delete a blog if id is valid', async () => {
+  const blogsAtStart = await Blog.find({})
+  const blogToDelete = blogsAtStart[0]
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .expect(204)
+  const blogsAtEnd = await Blog.find({})
+  const ids = blogsAtEnd.map(blog => blog.id)
+  expect(blogsAtEnd.length).toEqual(blogsAtStart.length - 1)
+  expect(ids).not.toContain(blogToDelete.id)
+})
+
 afterAll(() => {
   mongoose.connection.close()
   })
