@@ -76,6 +76,28 @@ test('id attribute should be defined', async () => {
   expect(response.body[0].id).toBeDefined()
 });
 
+test('it should create a new blog in the database', async () => {
+  const newBlog = {
+      title: "Test Blog",
+      author: "Developer",
+      url: "https://freecodecamp.com/",
+      likes: 7
+    }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+  
+  const response = await api.get('/api/blogs')
+
+  const titles = response.body.map(blog => blog.title)
+
+  expect(response.body).toHaveLength(initialBlogs.length + 1)
+  expect(titles).toContain("Test Blog")
+});
+
 afterAll(() => {
   mongoose.connection.close()
   })
