@@ -72,7 +72,6 @@ app.put("/persons/:id", (req, res, next) => {
 
 const errorHandler = (error, req, res, next) => {
   console.log(error)
-  console.log("I grabbed it")
   if (error.name === "CastError") {
     return res.status(400).send({ error: "id is in the wrong format" })
   } else if (error.name === "ValidationError"){
