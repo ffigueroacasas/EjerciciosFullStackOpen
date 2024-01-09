@@ -20,4 +20,9 @@ const create = async (newBlog) => {
   return response.data
 }
 
-export default { getAll, create, setToken}
+const update = async (blogToLike) => {
+  const response = await axios.put(baseUrl + '/' + blogToLike.id, blogToLike)
+  return response.data
+}
+
+export default { getAll, create, setToken, update}

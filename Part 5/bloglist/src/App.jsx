@@ -17,7 +17,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
-  }, [])
+  }, [blogs])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
@@ -40,6 +40,23 @@ const App = () => {
     } catch (error) {
       setNotification({message: 'wrong username or password', isAnError: true})
       setTimeout(() => setNotification(null), 5000);
+    }
+  }
+
+  const likeBlog = async (blogToLike) => {
+    try{
+      const likedBlog = await blogService.update(blogToLike)
+      setBlogs((prevBlogs) => {
+      // Remove the old blog and add the liked blog
+      const updatedBlogs = prevBlogs
+        .filter((blog) => blog.id !== likedBlog.id)
+        .concat(likedBlog);
+
+      return updatedBlogs;
+    });
+    }
+    catch(error){
+      console.log('could not like blog because ', error)
     }
   }
 
@@ -94,7 +111,7 @@ const App = () => {
         <CreateBlogForm addBlog={addBlog}/>  
       </Togglable> 
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} />
       )}
     </div>
   )
