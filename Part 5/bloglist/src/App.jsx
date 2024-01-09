@@ -17,7 +17,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
-  }, [blogs])
+  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
@@ -90,7 +90,7 @@ const App = () => {
       <h2>blogs</h2>
       <Notification notification={notification} /> 
       <p>{user.name} logged in</p> <button onClick={handleLogOut}>Log Out</button>
-      <Togglable>
+      <Togglable message="New Blog">
         <CreateBlogForm addBlog={addBlog}/>  
       </Togglable> 
       {blogs.map(blog =>
