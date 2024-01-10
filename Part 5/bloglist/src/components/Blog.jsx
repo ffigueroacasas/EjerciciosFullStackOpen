@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 const Blog = ({ blog, likeBlog }) => {
-  const [detailsVisible, setDetailsVisible] = useState(false)
+  const [detailsVisible, setDetailsVisible] = useState(true)
 
   const showWhenVisible = {display: detailsVisible ? '' : 'none'}
 

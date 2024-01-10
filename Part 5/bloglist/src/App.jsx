@@ -15,7 +15,7 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+      setBlogs(blogs.sort((a, b)=> b.likes - a.likes) )
     )  
   }, [blogs])
 
@@ -47,7 +47,6 @@ const App = () => {
     try{
       const likedBlog = await blogService.update(blogToLike)
       setBlogs((prevBlogs) => {
-      // Remove the old blog and add the liked blog
       const updatedBlogs = prevBlogs
         .filter((blog) => blog.id !== likedBlog.id)
         .concat(likedBlog);
