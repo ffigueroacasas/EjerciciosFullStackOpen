@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({ blog, likeBlog }) => {
+const Blog = ({ blog, likeBlog, deleteBlog}) => {
   const [detailsVisible, setDetailsVisible] = useState(true)
 
   const showWhenVisible = {display: detailsVisible ? '' : 'none'}
@@ -14,6 +14,12 @@ const Blog = ({ blog, likeBlog }) => {
       url: blog.url
     }
     likeBlog(blogToLike)
+  }
+
+  const handleDelete = () => {
+    if (window.confirm(`Do you really want to delete "${blog.title}" by ${blog.author}?`)){
+      deleteBlog(blog)
+    }
   }
 
   const blogStyle = {
@@ -32,6 +38,7 @@ const Blog = ({ blog, likeBlog }) => {
       <p>{blog.url}</p>
       <p>Likes: {blog.likes}</p> <button onClick={handleLike}>Like</button>
       <p>{blog.author}</p>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   </div>  
 )}

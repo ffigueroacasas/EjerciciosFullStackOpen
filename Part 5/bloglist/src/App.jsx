@@ -70,6 +70,11 @@ const App = () => {
     setTimeout(() => setNotification(null), 5000)
     setBlogs((blogs.concat(blog)).sort((a,b) => b.likes - a.likes))
   }
+  
+  const deleteBlog = async (blogToDelete) => {
+    const deletedBlog = await blogService.remove(blogToDelete)
+    setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id))
+  }
 
   if (user === null){
     return (
@@ -110,7 +115,7 @@ const App = () => {
         <CreateBlogForm addBlog={addBlog}/>  
       </Togglable> 
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} />
+        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} deleteBlog={deleteBlog} />
       )}
     </div>
   )
