@@ -1,17 +1,17 @@
-import { useState } from "react"
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, likeBlog, deleteBlog}) => {
+const Blog = ({ blog, likeBlog, deleteBlog }) => {
   const [detailsVisible, setDetailsVisible] = useState(true)
 
-  const showWhenVisible = {display: detailsVisible ? '' : 'none'}
+  const showWhenVisible = { display: detailsVisible ? '' : 'none' }
 
   const handleLike = () => {
     const blogToLike = {
-      id: blog.id, 
-      title: blog.title, 
-      author: blog.author, 
-      likes: blog.likes + 1, 
+      id: blog.id,
+      title: blog.title,
+      author: blog.author,
+      likes: blog.likes + 1,
       url: blog.url
     }
     likeBlog(blogToLike)
@@ -32,17 +32,17 @@ const Blog = ({ blog, likeBlog, deleteBlog}) => {
   }
 
   return (
-  <div style={blogStyle}>
-    {blog.title} 
-    <button onClick={() => setDetailsVisible(!detailsVisible)}>{detailsVisible ? "Hide" : "Show"}</button>
-    <div style={showWhenVisible}>
-      <p>{blog.url}</p>
-      <p>Likes: {blog.likes}</p> <button onClick={handleLike}>Like</button>
-      <p>{blog.author}</p>
-      <button onClick={handleDelete}>Delete</button>
+    <div style={blogStyle}>
+      {blog.title}
+      <button onClick={() => setDetailsVisible(!detailsVisible)}>{detailsVisible ? 'Hide' : 'Show'}</button>
+      <div style={showWhenVisible}>
+        <p>{blog.url}</p>
+        <p>Likes: {blog.likes}</p> <button onClick={handleLike}>Like</button>
+        <p>{blog.author}</p>
+        <button onClick={handleDelete}>Delete</button>
+      </div>
     </div>
-  </div>  
-)}
+  )}
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
