@@ -1,4 +1,4 @@
-export const Notification = ({notification}) => {
+const Notification = ({notification}) => {
   const notificationStyles = {
     color: 'yellowgreen',
     fontSize: 20,
@@ -24,3 +24,5 @@ export const Notification = ({notification}) => {
     <h3 style={notification.isAnError ? errorStyles: notificationStyles}>{notification.message}</h3>
   )
 } 
+
+export default Notification
