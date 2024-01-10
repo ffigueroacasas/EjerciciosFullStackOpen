@@ -68,7 +68,7 @@ const App = () => {
     const blog = await blogService.create(newBlog)
     setNotification({message: `a new blog "${blog.title}" by ${blog.author} has been added`, isAnError: false})
     setTimeout(() => setNotification(null), 5000)
-    setBlogs(blogs.concat(blog))
+    setBlogs((blogs.concat(blog)).sort((a,b) => b.likes - a.likes))
   }
 
   if (user === null){
