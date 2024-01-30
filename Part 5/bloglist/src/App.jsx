@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
@@ -12,6 +12,8 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [notification, setNotification] = useState(null)
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -69,6 +71,7 @@ const App = () => {
     setNotification({ message: `a new blog "${blog.title}" by ${blog.author} has been added`, isAnError: false })
     setTimeout(() => setNotification(null), 5000)
     setBlogs((blogs.concat(blog)).sort((a,b) => b.likes - a.likes))
+    blogFormRef.current.toggleVisibility()
   }
 
   const deleteBlog = async (blogToDelete) => {
@@ -111,7 +114,7 @@ const App = () => {
       <h2>blogs</h2>
       <Notification notification={notification} />
       <p>{user.name} logged in</p> <button onClick={handleLogOut}>Log Out</button>
-      <Togglable message="New Blog">
+      <Togglable message="New Blog" ref={blogFormRef} >
         <CreateBlogForm addBlog={addBlog}/>
       </Togglable>
       {blogs.map(blog =>

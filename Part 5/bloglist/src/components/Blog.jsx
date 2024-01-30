@@ -2,17 +2,14 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 
 const Blog = ({ blog, likeBlog, deleteBlog }) => {
-  const [detailsVisible, setDetailsVisible] = useState(true)
+  const [detailsVisible, setDetailsVisible] = useState(false)
 
   const showWhenVisible = { display: detailsVisible ? '' : 'none' }
 
   const handleLike = () => {
     const blogToLike = {
-      id: blog.id,
-      title: blog.title,
-      author: blog.author,
-      likes: blog.likes + 1,
-      url: blog.url
+      ...blog,
+      likes: blog.likes + 1
     }
     likeBlog(blogToLike)
   }
@@ -34,6 +31,7 @@ const Blog = ({ blog, likeBlog, deleteBlog }) => {
   return (
     <div style={blogStyle}>
       {blog.title}
+      {blog.author}
       <button onClick={() => setDetailsVisible(!detailsVisible)}>{detailsVisible ? 'Hide' : 'Show'}</button>
       <div style={showWhenVisible}>
         <p>{blog.url}</p>
