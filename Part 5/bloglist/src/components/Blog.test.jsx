@@ -58,4 +58,26 @@ describe('Blog Component', () => {
     expect(url).toBeDefined()
     expect(likes).toBeDefined()
   })
+
+  test('after two clicks of the "like" button, its handler has been called twice', () => {
+    const blog = {
+      id: '******',
+      title: 'example title',
+      author: 'example author',
+      url: 'https://exampleurl.com',
+      likes: 10
+    }
+
+    const likeBlog = jest.fn()
+    const deleteBlog = jest.fn()
+    component = render(
+      <Blog key={blog.id} blog={blog}  likeBlog={likeBlog} deleteBlog={deleteBlog}/>
+    )
+
+    const button = component.querySelector('.like-button')
+
+    fireEvent.click(button)
+    fireEvent.click(button)
+    expect(likeBlog.mock.calls).toHaveLength(2);
+  })
 })

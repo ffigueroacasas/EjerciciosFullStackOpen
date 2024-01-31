@@ -35,7 +35,7 @@ const Blog = ({ blog, likeBlog, deleteBlog }) => {
       <button onClick={() => setDetailsVisible(!detailsVisible)} className='show-hide' >{detailsVisible ? 'Hide' : 'Show'}</button>
       <div style={showWhenVisible}>
         <p>{blog.url}</p>
-        <p>Likes: {blog.likes}</p> <button onClick={handleLike}>Like</button>
+        <p>Likes: {blog.likes}</p> <button onClick={handleLike} className='like-button' >Like</button>
         <p>{blog.author}</p>
         <button onClick={handleDelete}>Delete</button>
       </div>
