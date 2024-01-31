@@ -32,7 +32,7 @@ const Blog = ({ blog, likeBlog, deleteBlog }) => {
     <div style={blogStyle}>
       {blog.title}
       {blog.author}
-      <button onClick={() => setDetailsVisible(!detailsVisible)}>{detailsVisible ? 'Hide' : 'Show'}</button>
+      <button onClick={() => setDetailsVisible(!detailsVisible)} className='show-hide' >{detailsVisible ? 'Hide' : 'Show'}</button>
       <div style={showWhenVisible}>
         <p>{blog.url}</p>
         <p>Likes: {blog.likes}</p> <button onClick={handleLike}>Like</button>
