@@ -88,6 +88,7 @@ const App = () => {
             <p>Username: </p>
             <input
               type="text"
+              id='username-input'
               onChange={({ target }) => setUsername(target.value)}
               value={username}
               name="Username"
@@ -97,12 +98,13 @@ const App = () => {
             <p>Password: </p>
             <input
               type="password"
+              id='password-input'
               onChange={({ target }) => setPassword(target.value)}
               name="Password"
               value={password}
             />
           </div>
-          <button type="submit">Log In</button>
+          <button type="submit" id='login-button'>Log In</button>
         </form>
         <Notification notification={notification}/>
       </div>
