@@ -4,11 +4,17 @@ describe('Blog app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
     const user = {
-      username: 'test',
-      password: 'test',
-      name: 'test'
+      username: 'testing',
+      password: 'testing',
+      name: 'testing'
     }
     cy.request('POST', 'http://localhost:3003/api/users', user)
+    const anotherUser = {
+      username: 'another', 
+      password: 'another', 
+      name: 'another'
+    }
+    cy.request('POST', 'http://localhost:3003/api/users', anotherUser)
     cy.visit('http://127.0.0.1:3000/')
   })
 
@@ -18,14 +24,14 @@ describe('Blog app', function() {
 
   describe('Login', function()  {
     it('should log in with the correct username and password', function() {
-        cy.get('#username-input').type('test')
-        cy.get('#password-input').type('test')
+        cy.get('#username-input').type('testing')
+        cy.get('#password-input').type('testing')
         cy.get('#login-button').click()
-        cy.contains('test logged in')
+        cy.contains('testing logged in')
     });
 
     it('should reject user with incorrect username or password', function()  {
-      cy.get('#username-input').type('test')
+      cy.get('#username-input').type('testing')
         cy.get('#password-input').type('wrong')
         cy.get('#login-button').click()
         cy.contains('wrong username or password')
@@ -35,7 +41,7 @@ describe('Blog app', function() {
   describe('When logged in', function()  {
     beforeEach(function() {
       cy.request('POST', 'http://localhost:3003/api/login', {
-        username: 'test', password: 'test'
+        username: 'testing', password: 'testing'
       }).then(({body}) => {
         localStorage.setItem('loggedInUser', JSON.stringify(body))
         cy.visit('http://127.0.0.1:3000/')
@@ -78,6 +84,19 @@ describe('Blog app', function() {
         cy.get('#delete-button').click()
         cy.get('test title').should('not.exist')
       })
+
+      it('should stop another user from deleting a blog they did not create', function() {
+        cy.get('#log-out-button').click()
+        cy.request('POST', 'http://localhost:3003/api/login', {
+          username: 'another', password: 'another'
+          }).then(({body}) => {
+            localStorage.setItem('loggedInUser', JSON.stringify(body))
+            cy.visit('http://127.0.0.1:3000/')
+          })
+        cy.get('#show-button:first-child').click()
+        cy.get('#delete-button').click()
+        cy.get('test title')
+      });
     });
   });
 })
