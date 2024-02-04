@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const initialState = 'No error to show just yet'
+const initialState = ''
 
 const notificationSlice = createSlice({
   name: 'notification', 
   initialState, 
   reducers: {
-
+    newNotification: (state, action) => {
+      return action.payload
+    }
   }
 })
 
-// export const { } = notificationSlice.actions;
+export const { newNotification } = notificationSlice.actions;
 export default notificationSlice.reducer;

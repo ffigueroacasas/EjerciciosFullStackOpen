@@ -9,10 +9,14 @@ const Notification = () => {
 
   const notification = useSelector(state => state.notification)
 
+  if (notification !== '') {
+    return (
+      <div style={style}>
+        {notification}
+      </div>
+    )}
   return (
-    <div style={style}>
-      {notification}
-    </div>
+    <div></div>
   )
 }
 
