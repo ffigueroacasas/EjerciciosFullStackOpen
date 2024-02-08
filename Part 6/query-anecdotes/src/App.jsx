@@ -7,13 +7,13 @@ import NotificationContext from './NotificationContext'
 
 const App = () => {
   const queryClient = useQueryClient()
-   const updateAnecdoteMutation = useMutation(updateAnecdote, {
+  const [notification, dispatch] = useContext(NotificationContext)
+  const updateAnecdoteMutation = useMutation(updateAnecdote, {
     onSuccess: () => {
       queryClient.invalidateQueries('anecdotes')
     }
-   })
+    })
   const result = useQuery('anecdotes', getAnecdotes)
-  const [notification, dispatch] = useContext(NotificationContext)
 
   if (result.isLoading) return <div>loading data...</div>
 
