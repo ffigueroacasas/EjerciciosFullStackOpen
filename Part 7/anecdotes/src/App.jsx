@@ -1,8 +1,20 @@
 import { useState } from 'react'
 import { 
   BrowserRouter as Router, 
-  Routes, Route, Link
+  Routes, Route, Link, useParams
 } from 'react-router-dom'
+
+const Anecdote = ({anecdotes}) => {
+  const id = useParams().id
+  const anecdote = anecdotes.find(anecdote => anecdote.id === Number(id))
+  
+  return (
+    <>
+      <h3>{anecdote.content}</h3>
+      <p>This anecdote has been voted {anecdote.votes} times</p>
+    </>
+  )
+}
 
 const Menu = ({anecdotes}) => {
   const padding = {
@@ -17,6 +29,7 @@ const Menu = ({anecdotes}) => {
       </div>
 
       <Routes>
+        <Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes}></Anecdote>} />
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes}/>}/>
         <Route path="/create-new-anecdote" element={<CreateNew />}/>
         <Route path="/about" element={<About />}/>
@@ -29,7 +42,10 @@ const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
+      {anecdotes.map(anecdote => 
+      <li key={anecdote.id}>
+        <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+      </li>)}
     </ul>
   </div>
 )
