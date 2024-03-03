@@ -3,6 +3,12 @@ const Authors = ({show, authors}) => {
     return null
   }
 
+  if (authors.loading){
+    return (
+      <div>Loading ...</div>
+    )
+  }
+
   return (
     <div>
       <h2>authors</h2>
@@ -13,7 +19,7 @@ const Authors = ({show, authors}) => {
             <th>born</th>
             <th>books</th>
           </tr>
-          {authors.map((a) => (
+          {authors.data.allAuthors.map((a) => (
             <tr key={a.name}>
               <td>{a.name}</td>
               <td>{a.born}</td>
