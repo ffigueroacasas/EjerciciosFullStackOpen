@@ -183,7 +183,7 @@ const resolvers = {
           }
         })
       }
-      let savedAuthor = Author.findOneAndUpdate({name: author.name}, {born: args.setBornTo})
+      let savedAuthor = Author.findOneAndUpdate({name: author.name}, {born: args.setBornTo}, { new: true })
       return savedAuthor
     }
   }
