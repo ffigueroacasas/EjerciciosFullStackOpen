@@ -134,7 +134,7 @@ const resolvers = {
     bookCount: async () => Book.collection.countDocuments(),
     authorCount: async () => Author.collection.countDocuments(),
     allBooks: async (root, args) => {
-      let booksToBeReturned = Book.find({})
+      let booksToBeReturned = await Book.find({})
       if (args.author){
         booksToBeReturned = booksToBeReturned.filter(book => book.author === args.author)
       }
@@ -147,9 +147,17 @@ const resolvers = {
   },
 
   Author: {
-    bookCount: (root) => {
-      const bookCount = books.reduce((sum, current) => current.author === root.name ? sum = sum + 1 : sum, 0)
-      return bookCount
+    bookCount: async (root) => {
+      let author = await Author.findOne({name: root.name})
+      if (!author) {
+        throw new GraphQLError('non existent author', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+          }
+        })
+      }
+      let booksByAuthor = await Book.find({author: author})
+      return booksByAuthor.length
     }
   },
 
@@ -166,14 +174,17 @@ const resolvers = {
       const book = new Book({...args, author: author._id})
       return book.save()
     },
-    editAuthor: (root, args) => {
-      const authorToEdit = authors.find(author => author.name === args.name)
-      if (!authorToEdit){
-        return null
+    editAuthor: async (root, args) => {
+      let author = await Author.findOne({name: args.name})
+      if (!author){
+        throw new GraphQLError('non existent author', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+          }
+        })
       }
-      const editedAuthor = { ...authorToEdit, born: args.setBornTo}
-      authors = authors.map(author => author.name === args.name ? editedAuthor : author)
-      return editedAuthor
+      let savedAuthor = Author.findOneAndUpdate({name: author.name}, {born: args.setBornTo})
+      return savedAuthor
     }
   }
 }
