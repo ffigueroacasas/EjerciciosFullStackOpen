@@ -107,6 +107,14 @@ const resolvers = {
     }
   },
 
+  Book: {
+    author: async (root) => {
+      const authorId = root.author;
+      const author = await Author.findById(authorId);
+      return author;
+    }
+  },
+
   Mutation: {
     addBook: async (root, args, context) => {
       const currentUser = context.currentUser
