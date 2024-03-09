@@ -9,13 +9,13 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : null
+      authorization: token ? `Bearer ${token}` : null,
     }
   }
 })
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000'
+  uri: 'http://localhost:4000',
 })
 
 const client = new ApolloClient({

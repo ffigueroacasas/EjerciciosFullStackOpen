@@ -121,10 +121,11 @@ const resolvers = {
       if (!currentUser){
         throw new GraphQLError('not authenticated', {
           extensions: {
-            code: BAD_USER_INPUT
+            code: "BAD_USER_INPUT"
           }
         })
       }
+      console.log(currentUser)
       let author = await Author.findOne({name: args.author})
       if (!author) {
         author = new Author({
@@ -133,15 +134,17 @@ const resolvers = {
         })
         author = await author.save()
       }
+      console.log(author)
       const book = new Book({...args, author: author._id})
       return book.save()
     },
-    editAuthor: async (root, args) => {
+    editAuthor: async (root, args, context) => {
       const currentUser = context.currentUser
+      console.log(currentUser)
       if (!currentUser){
         throw new GraphQLError('not authenticated', {
           extensions: {
-            code: BAD_USER_INPUT
+            code: "BAD_USER_INPUT"
           }
         })
       }
