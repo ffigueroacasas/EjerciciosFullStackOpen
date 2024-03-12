@@ -31,7 +31,7 @@ const calculateExercises = (dailyHours: number[], targetHours: number): Results 
 
 export const parseArguments = (args: string[]): InputValues => {
   if (args.length < 4) throw new Error('Too few arguments.');
-  let targetDays: number;
+  let targetDays = 0;
   if (!isNaN(Number(args[2]))) {
     targetDays = Number(args[2]);
   };
