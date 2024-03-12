@@ -13,7 +13,7 @@ export interface InputValues {
   dailyHours: number[]
 }
 
-const calculateExercises = (dailyHours: number[], targetHours: number): Results => {
+export const calculateExercises = (dailyHours: number[], targetHours: number): Results => {
   const periodLength = dailyHours.length;
   const trainingDays = dailyHours.reduce((accumulator, current) => current > 0 ? accumulator += 1 : accumulator, 0);
   const totalHours = dailyHours.reduce((accumulator, current) => accumulator + current, 0);
