@@ -3,7 +3,7 @@ export interface InputValues {
   weight: number
 };
 
-const calculateBmi = (height: number, weight: number): string => {
+export const calculateBmi = (height: number, weight: number): string => {
   let result: number = (weight / (height * height)) * 10000;
   let message: string;
   switch (true){
