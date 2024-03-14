@@ -1,0 +1,11 @@
+### create a new patient
+POST http://localhost:3003/api/patients
+Content-Type: application/json
+
+{
+  "name": "Francisco Figueroa Casas",
+  "dateOfBirth": "2002-07-19",
+  "gender": "male",
+  "occupation": "Student",
+  "ssn": "44306801"
+}
