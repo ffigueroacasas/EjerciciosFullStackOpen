@@ -1,5 +1,5 @@
-import { DiaryEntry } from "../types"
-import Entry from "./Entry.tsx"
+import { DiaryEntry } from "../types";
+import Entry from "./Entry.tsx";
 
 interface EntryListProps {
   entries: Array<DiaryEntry>

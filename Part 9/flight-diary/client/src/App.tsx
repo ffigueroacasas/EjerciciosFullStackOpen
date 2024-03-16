@@ -17,7 +17,7 @@ const App = () => {
         setEntries(data);
       }
     })
-  }, [entries])
+  }, [entries]);
 
   const submit = (event: React.SyntheticEvent, date: string, weather: string, visibility: string) => {
     event.preventDefault();
@@ -31,12 +31,12 @@ const App = () => {
       .then(data => {if (data) return setEntries(entries.concat(data))})
       .catch(error => {
         if (error instanceof AxiosError && error.response?.data){
-          setMessage(error.response.data)
+          setMessage(error.response.data);
         }
         else{
           setMessage(error.message);
         }
-        setTimeout(() => setMessage(''), 5000)
+        setTimeout(() => setMessage(''), 5000);
       })
   }
   
