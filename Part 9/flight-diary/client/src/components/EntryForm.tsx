@@ -12,7 +12,12 @@ const EntryForm = (props: EntryFormProps) => {
   
 
   return (
-    <form onSubmit={event => props.submit(event, date, weather, visibility)}>
+    <form onSubmit={event => {
+      props.submit(event, date, weather, visibility);
+      setDate('');
+      setWeather('');
+      setVisibility('');
+    }}>
       Date: <input type="date" onChange={({target}) => setDate(target.value)}/>
       Weather: <input type="text" onChange={({target}) => setWeather(target.value)}/>
       Visibility: <input type="text" onChange={({target}) => setVisibility(target.value)}/>
