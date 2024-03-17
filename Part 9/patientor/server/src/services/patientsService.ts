@@ -9,13 +9,14 @@ export const getPatients = ():Array<Patient> => {
 }
 
 export const getNonSensitivePatients = ():Array<NonSensitivePatient> => {
-  return patients.map(({ id, name, dateOfBirth, gender, occupation}) => {
+  return patients.map(({ id, name, dateOfBirth, gender, occupation, entries}) => {
     return {
       id,
       name,
       dateOfBirth, 
       gender,
-      occupation}
+      occupation,
+    entries}
   })
 }
 
