@@ -1,5 +1,5 @@
 import express from 'express';
-import { getNonSensitivePatients, addPatient } from '../services/patientsService';
+import { getNonSensitivePatients, addPatient, getPatientById } from '../services/patientsService';
 import toNewPatient from '../utils';
 
 const router = express.Router();
@@ -7,6 +7,15 @@ const router = express.Router();
 router.get('/', (_req, res) => {
   const patients = getNonSensitivePatients();
   res.json(patients);
+})
+
+router.get('/:id', (req, res) => {
+  const id = req.params.id;
+  const patient = getPatientById(id);
+  if (patient) {
+    return res.json(patient);
+  }
+  return res.status(404).json({ error: 'id non existant' });
 })
 
 router.post('/', (req, res) => {

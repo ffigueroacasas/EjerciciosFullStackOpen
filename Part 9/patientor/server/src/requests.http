@@ -1,3 +1,6 @@
+### find all patients
+GET http://localhost:3003/api/patients
+
 ### create a new patient
 POST http://localhost:3003/api/patients
 Content-Type: application/json
@@ -9,3 +12,6 @@ Content-Type: application/json
   "occupation": "Student",
   "ssn": "44306801"
 }
+
+### find a specific patient
+GET http://localhost:3003/api/patients/d27736ec-f723-11e9-8f0b-362b9e155667
